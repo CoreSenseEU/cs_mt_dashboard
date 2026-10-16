@@ -3,7 +3,7 @@ Creates an interactive dashboard for a mobile robot via ROS2, retrieving robot d
 
 # Prequisites
 
-Requires ROS1 driver bridging to ROS2. Follow setup instructions on [this repository](https://github.com/leahtyndall/mir_ros2_bridge_stack)
+Requires ROS1 driver bridging to ROS2. Follow setup instructions on [this repository](https://github.com/CoreSenseEU/cs4mt_navigation_cognition.git)
 
 ### Dependencies
 Create directory & virtual enviornment & install

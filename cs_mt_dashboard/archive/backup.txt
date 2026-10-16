@@ -1,0 +1,256 @@
+def graph(n):
+    networkMap.getData() #uncomment to build network map
+    df = pd.read_csv('networkData.csv')
+    fig = go.Figure()
+    
+    #drawing site perimeter
+    fig.add_trace(go.Scatter(
+        x = [39.850, 41.35, 70.9, 70.75, 81.85, 81.3, 77.25, 77.8,70.05,69.65, 39.85],
+        y = [52.6, 19.85, 21.3, 40.1, 40.35, 56.15, 55.9, 43.85, 43.6, 53.4, 52.6],
+
+        mode='lines',
+        #name='Perimeter',
+        line=dict(color='red', width = 1),
+        line_shape='linear',
+        showlegend=False
+    ))
+   
+    #z = df['strength']
+    #plotting coords
+    fig.add_trace(
+        go.Scatter(
+            mode='markers',
+            x=df['x'],
+            y=df['y'],
+    
+            marker=dict(
+                color = df['strength'],
+                cmax = 20,
+                cmin = 70,
+                colorscale='Portland',
+                size=10,
+                gradient=dict(type='radial'),
+                #reversescale = True,
+                colorbar = dict(
+                    title='Strength')),
+                showlegend=False
+        ),
+       
+    )
+    
+
+    fig.update_layout(
+        uirevision='constant',
+        yaxis_scaleanchor='x',
+        xaxis = dict(
+        tickmode = 'linear',  
+        dtick = 10,
+        
+    ),
+        yaxis=dict(
+        tickmode= 'linear',
+        dtick=10
+        )
+        
+    )
+
+HEATMAP VERSION:
+
+def graph(n):
+    networkMap.getData() #uncomment to build network map
+    df = pd.read_csv('networkData.csv')
+    fig = go.Figure()
+    
+    #drawing site perimeter
+    fig.add_trace(go.Scatter(
+        x = [39.850, 41.35, 52.8, 52, 60.85,61.4,58.8,44.35,44.1,52.15,52.8, 70.9, 70.75,70.75, 64.35, 64.95,71.2,70.75, 81.85, 81.3, 77.25, 77.8,70.05,69.65, 39.85],
+        y = [52.6, 19.85, 20.2, 40.5,40.75,27.8,22.7,22.05,31.35,31.5, 20.2, 21.3, 40.1,41.15,40.75,24.6,24.6,40.1, 40.35, 56.15, 55.9, 43.85, 43.6, 53.4, 52.6],
+
+        mode='lines',
+        #name='Perimeter',
+        line=dict(color='red', width = 1),
+        line_shape='linear',
+        showlegend=False
+    ))
+    custom_colors = [
+        [0, 'rgba(255, 255, 255, 0)'], 
+        #[0.1, 'rgba(255, 255, 255, 0)'], 
+        [0.2, '#fec010'],              
+        [0.5, '#da3d68'],              
+        [1.0, '#0d0887']            
+    ]
+    #z = df['strength']
+    #plotting coords
+    fig.add_trace(
+        go.Histogram2dContour(
+            x=df['x'],
+            y=df['y'],
+            z = df['strength'],
+            histfunc = 'avg',
+            colorscale=custom_colors,
+            showscale=True,
+            nbinsx =7,
+            nbinsy=7,
+            zmin = 25,
+            zmax = 80,
+            #reversescale = True,
+            #showlegend=False
+            line=dict(width=0),
+            contours_coloring = 'heatmap',
+            ncontours = 30
+        ), 
+    )
+
+    fig.update_layout(
+        #plot_bgcolor='white',
+        xaxis_title='X coordinate',
+        yaxis_title='Y coordinate',
+        uirevision='constant',
+        yaxis_scaleanchor='x',
+        xaxis = dict(
+        tickmode = 'linear',  
+        dtick = 10,
+    ),
+        yaxis=dict(
+        tickmode= 'linear',
+        dtick=10,
+        )
+        
+    )
+    
+    return fig
+
+
+
+    #############################
+    def marathon():
+        i = 0 #laps
+        j = 1
+        while i <= 100 and j < 10:
+            #print(f'Marathon Lap {i}')
+            check = checkPLC2()
+            #print('checking plc')
+            
+            while check == 0:
+
+                doMission(defs.plc2add)
+                print('plc = 0, collecting from b1')
+                cfb1()
+                
+            while check == 2:
+
+                doMission(defs.plc2add)
+                print('plc = 1, depositing at b2')
+                dab2()
+                
+            while check == 4:
+
+                doMission(defs.plc2add)
+                print('plc = 2, going to b3')
+                bay3()
+                time.sleep(10)
+                
+            while check == 6:
+                
+                doMission(defs.plc2add)
+                print('plc = 3, collecting from b2')
+                cfb2()
+                
+            while check== 8:
+
+                doMission(defs.plc2add)
+                print('plc = 4, depositing at b1')
+                dab1()
+                i = i + 1
+                print('resetting plc2')
+                doMission(defs.plc2reset)
+                
+
+        return
+        #########
+        FIXED:
+    
+def marathon():
+    i = 0 #laps
+    j = 1
+    while i <= 100 and j < 10:
+        #print(f'Marathon Lap {i}')
+        check = checkPLC2()
+        #print('checking plc')
+        
+        while checkPLC2() == 0:
+            doMission(defs.plc2add)  
+
+            print('check 0')
+            time.sleep(2)
+            print('done')
+            doMission(defs.plc2add)  
+
+            '''
+
+            doMission(defs.plc2add)
+            print('plc = 0, collecting from b1')
+            cfb1()
+            '''
+            
+        while checkPLC2() == 2:
+            doMission(defs.plc2add)  
+
+            print('check 2')
+            time.sleep(2)
+            print('done')
+            doMission(defs.plc2add) 
+            '''
+
+            doMission(defs.plc2add)
+            print('plc = 1, depositing at b2')
+            dab2()
+            '''
+            
+        while checkPLC2() == 4:
+            doMission(defs.plc2add)  
+
+            print('check 4')
+            time.sleep(2)
+            print('done')
+            doMission(defs.plc2add)             
+            '''
+
+            doMission(defs.plc2add)
+            print('plc = 2, going to b3')
+            bay3()
+            time.sleep(10)
+            '''
+            
+        while checkPLC2() == 6:
+            doMission(defs.plc2add)  
+
+            print('check 6')
+            time.sleep(2)
+            print('done')
+            doMission(defs.plc2add) 
+            '''
+            doMission(defs.plc2add)
+            print('plc = 3, collecting from b2')
+            cfb2()
+            '''
+            
+        while checkPLC2()== 8:
+            doMission(defs.plc2add)  
+
+            print('check 8')
+            time.sleep(2)
+            print('done')
+            doMission(defs.plc2reset) 
+            '''
+
+            doMission(defs.plc2add)
+            print('plc = 4, depositing at b1')
+            dab1()
+            i = i + 1
+            print('resetting plc2')
+            doMission(defs.plc2reset)
+            '''
+            
+
+    return

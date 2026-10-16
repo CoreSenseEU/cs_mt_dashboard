@@ -17,7 +17,7 @@ pip install numpy dash dash-bootstrap-components pandas plotly requests tinytuya
 
 # Installation:
 1. Go to directory `cd cs_dashboard`
-2. Clone repository `git clone https://github.com/leahtyndall/cs_mt_dashboard.git`
+2. Clone repository `git clone https://github.com/CoreSenseEU/cs_mt_dashboard.git`
 
 3. Run a websocket server from ROS2 pc
 ```

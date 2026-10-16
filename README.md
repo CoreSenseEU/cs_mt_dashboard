@@ -3,7 +3,7 @@ Creates an interactive dashboard for a mobile robot via ROS2, retrieving robot d
 
 # Prequisites
 
-Requires ROS1 driver bridging to ROS2. Follow setup instructions on [this repository](https://github.com/CoreSenseEU/cs4mt_navigation_cognition.git)
+Requires ROS1 driver bridging to ROS2. Follow setup instructions for KMR [this repository](https://github.com/CoreSenseEU/cs4mt_navigation_cognition.git) 
 
 ### Dependencies
 Create directory & virtual enviornment & install
@@ -37,10 +37,10 @@ ros2 run rosbridge_server rosbridge_webocket --port=<port>
 - missions.py - contains docking/undocking sequences & other buttons on dash -->
 - network.py - to be updated...void?
 - networkMap.py - records robot position and signal strength data to be plotted
-- rosAMCL.py - 
+- rosAMCL.py - performs localisation
 - rosDiagnostics.py - recieves signal level from mir ros driver
-- rosStatus.py -
-- rvizGUI.py - 
+- rosStatus.py -provides status of the robot
+- rvizGUI.py - can see ros rviz
 <!--- shellyGateControl.py - runs gate control
 - shellyStatsdorMir.py - gets status of gate (combine^?)-->
 - layout2.py - plotly dash layout of dashboard
